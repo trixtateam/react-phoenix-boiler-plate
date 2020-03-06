@@ -9,105 +9,21 @@ for a good explanation of the more intricate benefits it has.
 Everything needed to connect and wire phoenix channels can be found in
 [`phoenix`](./app/phoenix/) folder. 
 
-[`actions.js`](./app/phoenix/actions.js)  - includes all actions that will be dispatched to the `phoenix reducer`
+[`actions.js`](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/master/app/phoenix/actions.js)  - includes all actions that will be dispatched to the `phoenix reducer`
 
-[`constants.js`](./app/phoenix/constants.js) - includes all constants related to phoenix implementation
+[`constants.js`](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/master/app/phoenix/constants.js) - includes all constants related to phoenix implementation
 
-[`reducer.js`](./app/phoenix/reducer.js) - includes the `phoenix reducer` which holds the socket and all connected channels
+[`reducer.js`](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/master/app/phoenix/reducer.js) - includes the `phoenix reducer` which holds the socket and all connected channels
 
-[`socketSagas`](./app/phoenix/socketSagas.js) - includes all saga functions related to phoenix implementation
+[`socketSagas`](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/master/app/phoenix/socketSagas.js) - includes all saga functions related to phoenix implementation
 
-[`utils`](./app/phoenix/utils.js) - includes all helper methods related to phoenix implementation
+[`utils`](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/master/app/phoenix/utils.js) - includes all helper methods related to phoenix implementation
 
 ## How it is implemented
 
-In the `phoenix reducer` we keep the socket and all channels. This keeps a context of our phoenix socket alive we
+In the [`phoenix reducer`](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/master/app/phoenix/reducer.js) we keep the socket and all channels. This keeps a context of our phoenix socket alive we
 listen for any actions dispatched to this reducer related to sockets and channels. If we join or leave a channel, we update 
 the socket in the reducer with updated socket
-
-
-```JS
-import {
-  socketActionTypes,
-  socketStatuses,
-  channelActionTypes,
-  channelStatuses,
-} from './constants';
-
-const initialState = {
-  socket: false,
-  channel: false,
-  currentRoom: false,
-  socketStatus: false,
-  channelStatus: false,
-  message: false,
-  presentUsers: false,
-};
-
-function socketReducer(state = initialState, action) {
-  switch (action.type) {
-    case channelActionTypes.CHANNEL_TIMEOUT:
-      return {
-        ...state,
-        channelStatus: channelStatuses.CHANNEL_TIMEOUT,
-        message: action.error ? action.error : action.data,
-      };
-    case channelActionTypes.CHANNEL_PUSH_ERROR:
-      return {
-        ...state,
-        channelStatus: channelStatuses.CHANNEL_ERROR,
-        message: action.error,
-      };
-    case channelActionTypes.CHANNEL_PUSH:
-      return {
-        ...state,
-        channelStatus: channelStatuses.CHANNEL_OK,
-        message: action.data,
-      };
-    case channelActionTypes.CHANNEL_JOIN:
-      return {
-        ...state,
-        currentRoom: null,
-        channel: action.channel,
-      };
-    case channelActionTypes.CHANNEL_PRESENCE_UPDATE:
-      return {
-        ...state,
-        presentUsers: action.presentUsers,
-      };
-    case channelActionTypes.CHANNEL_LEAVE:
-      return {
-        ...state,
-      };
-    case socketActionTypes.SOCKET_OPEN:
-      return {
-        ...state,
-        socketStatus: socketStatuses.CONNECTED,
-        message: false,
-      };
-    case socketActionTypes.SOCKET_CONNECT:
-      return {
-        ...state,
-        socketStatus: socketStatuses.CONNECTING,
-        socket: action.socket,
-        message: false,
-      };
-    case socketActionTypes.SOCKET_DISCONNECT:
-      return initialState;
-    case socketActionTypes.SOCKET_ERROR:
-      return {
-        ...state,
-        socketStatus: socketStatuses.ERROR,
-        message: action.error,
-      };
-    default:
-      return state;
-  }
-}
-
-export default socketReducer;
-
-```
 
 ## Usage
 
@@ -170,7 +86,7 @@ for obtaining an authentication token for future authenticated channel joins
 
 
 `pushToChannel` - this function expects the socket you receive from `getChannel`. On pushing
- something to the channel if a `loadingStatusKey` is provided that connected [LoadingStatusContainer](docs/css/react-semantic-ui.md#LoadingStatusContainer) 
+ something to the channel if a `loadingStatusKey` is provided that connected [LoadingStatusContainer](css/react-semantic-ui.md#LoadingStatusContainer) 
  in your component will show progress. On any `CHANNEL_OK, CHANNEL_TIMEOUT,CHANNEL_ERROR,CHANNEL_JOINED` an `END_PROGRESS` action will be
  dispatched to the `app reducer` clearing  any `loadingStatusKey` or `loading` values.
  There are quite a few other parameters we can pass to this function
@@ -221,7 +137,8 @@ const socket = yield getChannel({
 ```
 
 
-##Saga Example
+## Saga Example
+
 In our saga for a container we listen for the dispatched action `REQUEST_LOGIN` and respond with `loginSaga` function
 
 ```JS
