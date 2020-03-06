@@ -1,0 +1,128 @@
+/**
+ * These are the variables used throughout the application. This is where
+ * overwrites that are not specific to components should be maintained.
+ */
+
+$black: #000000;
+$opacity-half-black: rgba(0, 0, 0, .5);
+$white: #FFFFFF;
+
+//neutral palette
+$color-neutral-500: #4b4f5b;
+$color-neutral-400: #829198;
+$color-neutral-300: #9ba7ad;
+$color-neutral-200: #dcdcdc;
+$color-neutral-100:#E0E1E2;
+$color-neutral-10: #f3f4fa;
+$color-neutral-0: #ffffff;
+
+$material-light-grey: #828da6;
+$material-dark-grey:  #383c3f;
+$material-dark: #717d98;
+$dark-theme-primary: #5b6063;
+$material-theme-primary: #626e88;
+
+$color-primary-purple: #5E02FF;
+$color-primary-darkpurple: #1E222D;
+$color-primary-darkerpurple: #171b25;
+
+$color-secondary-lightpurple: #7A1AD8;
+$color-secondary-lightred: #FF5855;
+$color-secondary-yellow: #FFC644;
+$color-secondary-teal: #5770FF;
+$color-secondary-turquoise: #36C0F7;
+$color-secondary-lime: #14DCAF;
+
+/*
+* NOTE: THIS IS THE DEFAULT SCALE VALUE OF THE ELEMENTS of the entire application - Default is 1
+*/
+
+$scale-value: 0.95;
+
+/*
+* ----------------
+*/
+
+$rt-namespace: 'Toastify';
+$rt-toast-width: 420px * $scale-value !default;
+$rt-toast-background: #ffffff !default;
+$rt-toast-min-height: 22px * $scale-value !default;
+$rt-toast-max-height: 800px * $scale-value !default;
+
+// loader
+$line-loader-height: 2px * $scale-value;
+
+// react-toastify
+$rt-color-default: #fff !default;
+$rt-color-info: #3498db !default;
+$rt-color-success: #07bc0c !default;
+$rt-color-warning: #f1c40f !default;
+$rt-color-error: #e74c3c !default;
+
+$rt-color-progress-default: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55) !default;
+
+$rt-mobile: "only screen and (max-width : 480px)" !default;
+$rt-font-family: sans-serif !default;
+$rt-z-index: 9999 !default;
+
+//default typography
+$small-font-size: 14px* $scale-value;
+$base-font-size: 14.4px* $scale-value !default;
+$default-font-family: 'Helvetica Neue', sans-serif;
+$line-height-base: 1.5;
+$line-height-title: 1.333;
+$line-height-display: 1.2;
+
+$base-border-radius: 2px* $scale-value;
+$header-font: 'Poppins', sans-serif;
+$body-font: 'Montserrat', sans-serif;
+
+// default screen size cut off points
+$content-xs-max-width: 320px* $scale-value;
+$content-sm-max-width: 480px* $scale-value;
+$content-md-max-width: 768px* $scale-value;
+$content-lg-max-width: 1024px* $scale-value;
+
+$screen-xs-max-width: 320px* $scale-value;
+$screen-sm-min-width: 480px* $scale-value;
+$screen-md-min-width: 768px* $scale-value;
+$screen-lg-min-width: 992px* $scale-value;
+$screen-xl-min-width: 1200px* $scale-value;
+
+//padding and margin
+$default-padding: 10px * $scale-value;
+$default-margin: 10px * $scale-value;
+
+//default spacing
+$default-spacing: 10px * $scale-value;
+$default-button-spacing: 2px * $scale-value;
+
+//padding and margin - No scaling
+$default-padding--no-scaling: 10px;
+$default-margin--no-scaling: 10px;
+$default-spacing--no-scaling: 10px;
+
+$spacing-sm: 16px * $scale-value;
+$spacing-md: 24px * $scale-value;
+$spacing-lg: 36px * $scale-value;
+$spacing-xl: 48px * $scale-value;
+$spacing-xxl: 64px * $scale-value;
+
+// box-shadows
+$light-shadow: 0px 2px 3px 0px rgba(0,0,0,.1);
+$elevation-1dp: 0px 2px 2px 0px rgba(5, 35, 49, 0.12), 0px 0px 2px 0px rgba(5, 35, 49, 0.14);
+$elevation-8dp: 0 8px 10px 1px rgba(5,35,49,0.14), 0 3px 14px 3px rgba(5,35,49,0.12);
+$web-chat-shadow: 0px 4px 5px 0px rgba(0,0,0,.1), 0px 3px 14px 3px rgba(0,0,0,.1), 0px 8px 10px 1px rgba(0,0,0,.1);
+
+//Font functions
+@mixin HeaderFont($size: $base-font-size, $weight: 600) {
+    font-family: $header-font;
+    font-weight: $weight;
+    font-size: $size;
+}
+
+@mixin BodyFont($size: $base-font-size, $weight: 300) {
+    font-family: $body-font;
+    font-weight: $weight;
+    font-size: $size;
+}

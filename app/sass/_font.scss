@@ -1,0 +1,163 @@
+@font-face {
+  font-family: 'toolbar-icons-dark-kitchen-sink';
+  src: url('./fonts/toolbar-icons-dark.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url('./fonts/Roboto_Condensed/RobotoCondensed-Light.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url('./fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf');
+  font-weight: Normal;
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url('./fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf');
+  font-weight: Bold;
+}
+
+@font-face {
+  font-family: 'Averia Libre';
+  src: url('./fonts/Averia_Libre/AveriaLibre-Light.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Averia Libre';
+  src: url('./fonts/Averia_Libre/AveriaLibre-Regular.ttf');
+  font-weight: Normal;
+}
+
+@font-face {
+  font-family: 'Averia Libre';
+  src: url('./fonts/Averia_Libre/AveriaLibre-Bold.ttf');
+  font-weight: Bold;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('./fonts/Alegreya_Sans/AlegreyaSans-Light.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('./fonts/Alegreya_Sans/AlegreyaSans-Regular.ttf');
+  font-weight: Normal;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  src: url('./fonts/Alegreya_Sans/AlegreyaSans-Bold.ttf');
+  font-weight: Bold;
+}
+
+@font-face {
+  font-family: 'Poppins', sans-serif;
+  src: url('./fonts/Poppins/Poppins-Light.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Poppins', sans-serif;
+  src: url('./fonts/Poppins/Poppins-Regular.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Poppins', sans-serif;
+  src: url('./fonts/Poppins/Poppins-Bold.ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Montserrat', sans-serif;
+  src: url('./fonts/Montserrat/Montserrat-Light.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Montserrat', sans-serif;
+  src: url('./fonts/Montserrat/Montserrat-Regular.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Montserrat', sans-serif;
+  src: url('./fonts/Montserrat/Montserrat-Bold.ttf');
+  font-weight: 600;
+}
+
+:root .fa-flip-horizontal, :root .fa-flip-vertical, :root .fa-rotate-90, :root .fa-rotate-180, :root .fa-rotate-270 {
+  -webkit-filter: none;
+  filter: none
+}
+
+.fa-stack {
+  display: inline-block;
+  height: 2em;
+  line-height: 2em;
+  position: relative;
+  vertical-align: middle;
+  width: 2em
+}
+
+.fa-stack-1x, .fa-stack-2x {
+  left: 0;
+  position: absolute;
+  text-align: center;
+  width: 100%
+}
+
+.fa-stack-1x {
+  line-height: inherit
+}
+
+.fa-stack-2x {
+  font-size: 2em
+}
+
+.fa-inverse {
+  color: #fff
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px
+}
+
+.sr-only-focusable:active, .sr-only-focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto
+}
+
+.fab {
+  font-family: "FontAwesome", serif;
+}
+
+.far {
+  font-weight: 400
+}
+
+.fa, .far, .fas {
+  font-family: "FontAwesome", serif;
+}
+
+.fa, .fas {
+  font-weight: 900
+}

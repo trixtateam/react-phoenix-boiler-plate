@@ -1,0 +1,12 @@
+
+.toast--positive-feedback {
+  background-color: $color-secondary-lime;
+}
+
+.toast--notification {
+  > div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
