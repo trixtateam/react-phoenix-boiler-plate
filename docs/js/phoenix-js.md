@@ -15,6 +15,8 @@ Everything needed to connect and wire phoenix channels can be found in
 
 [`reducer.js`](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/master/app/phoenix/reducer.js) - includes the `phoenix reducer` which holds the socket and all connected channels
 
+[`selectors.js`](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/master/app/phoenix/selectors.js) - includes the reselect `redux selectors` from the `phoenix reducer`
+
 [`socketSagas`](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/master/app/phoenix/socketSagas.js) - includes all saga functions related to phoenix implementation
 
 [`utils`](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/master/app/phoenix/utils.js) - includes all helper methods related to phoenix implementation
