@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 import { transformImmutableToRelativeType } from '../../utils/helpers';
 
 const selectRouter = (state) => state.get('router');
-const selectPhoenix = (state) => state.get('phoenix');
 const selectRouteLocation = (state) => state.getIn(['router', 'location']);
 const selectGlobal = (state) => state.get('global');
 const selectError = (state) => state.getIn(['global', 'error']);
@@ -34,16 +33,10 @@ const makeSelectHeaderMenu = () =>
     transformImmutableToRelativeType(menu),
   );
 
-const makeSelectSocket = () =>
-  createSelector(selectPhoenix, (phoenixState) => phoenixState.socket);
-
 const makeSelectRouteLocation = () =>
   createSelector(selectRouteLocation, (routeLocation) =>
     transformImmutableToRelativeType(routeLocation),
   );
-
-const makeSelectPresentUsers = () =>
-  createSelector(selectPhoenix, (phoenixState) => phoenixState.presentUsers);
 
 const makeSelectGlobalError = () =>
   createSelector(selectError, (error) =>
@@ -101,7 +94,6 @@ export {
   selectLoadingStatus,
   selectLoadingStatusForKey,
   selectLoadingType,
-  selectPhoenix,
   selectProgressMessage,
   selectRouteLocation,
   selectRouter,
@@ -114,10 +106,8 @@ export {
   makeSelectLoadingStatus,
   makeSelectLoadingStatusForKey,
   makeSelectLoadingType,
-  makeSelectPresentUsers,
   makeSelectProgressMessage,
   makeSelectRouteLocation,
-  makeSelectSocket,
   makeSelectSuccessMessage,
   makeSelectHeaderMenu,
 };

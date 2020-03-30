@@ -5,7 +5,6 @@ import warning from 'warning';
 import { connectSocket, connectToChannelForEvents, getDomain } from './actions';
 import {
   makeSelectRouteLocation,
-  makeSelectSocket,
 } from '../containers/App/selectors';
 import {
   formatSocketDomain,
@@ -14,6 +13,7 @@ import {
   setLocalStorageItem,
 } from './utils';
 import { channelActionTypes, SOCKET_DOMAIN } from './constants';
+import { makeSelectSocket } from './selectors';
 
 /**
  * Will attempt to create a connection to the socket for the given channel,
