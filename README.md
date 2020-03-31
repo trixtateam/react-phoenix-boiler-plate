@@ -9,20 +9,16 @@
 
 <div align="center">
   <!-- Dependency Status -->
-  <a href="https://david-dm.org/react-boilerplate/react-boilerplate">
-    <img src="https://david-dm.org/react-boilerplate/react-boilerplate.svg" alt="Dependency Status" />
+  <a href="https://david-dm.org/trixtateam/react-phoenix-boiler-plate">
+    <img src="https://david-dm.org/trixtateam/react-phoenix-boiler-plate.svg" alt="Dependency Status" />
   </a>
   <!-- devDependency Status -->
-  <a href="https://david-dm.org/react-boilerplate/react-boilerplate#info=devDependencies">
-    <img src="https://david-dm.org/react-boilerplate/react-boilerplate/dev-status.svg" alt="devDependency Status" />
+  <a href="https://david-dm.org/trixtateam/react-phoenix-boiler-plate#info=devDependencies">
+    <img src="https://david-dm.org/trixtateam/react-phoenix-boiler-plate/dev-status.svg" alt="devDependency Status" />
   </a>
   <!-- Build Status -->
   <a href="https://travis-ci.org/react-boilerplate/react-boilerplate">
     <img src="https://travis-ci.org/react-boilerplate/react-boilerplate.svg" alt="Build Status" />
-  </a>
-  <!-- Test Coverage -->
-  <a href="https://coveralls.io/r/react-boilerplate/react-boilerplate">
-    <img src="https://coveralls.io/repos/github/react-boilerplate/react-boilerplate/badge.svg" alt="Test Coverage" />
   </a>
 </div>
 <div align="center">
@@ -48,7 +44,7 @@
 <div align="center">
   <sub>Created by <a href="https://twitter.com/mxstbr">Max Stoiber</a>.</sub>
   <br/>
-  <sub>Integrating React Boiler Plate with <a href="https://hexdocs.pm/phoenix/channels.html#the-moving-parts">Phoenix Channels</a> and <a href="https://react.semantic-ui.com/">React Semanti UI</a></sub>
+  <sub>Integrating React Boiler Plate with <a href="https://hexdocs.pm/phoenix/channels.html#the-moving-parts">Phoenix Channels</a> and <a href="https://react.semantic-ui.com/">React Semantic UI</a></sub>
 </div>
 
 ## Features
