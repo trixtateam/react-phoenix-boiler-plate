@@ -9,17 +9,25 @@
 
 <div align="center">
   <!-- Dependency Status -->
-  <a href="https://david-dm.org/trixtateam/react-phoenix-boiler-plate">
-    <img src="https://david-dm.org/trixtateam/react-phoenix-boiler-plate.svg" alt="Dependency Status" />
+  <a href="https://david-dm.org/react-boilerplate/react-boilerplate">
+    <img src="https://david-dm.org/react-boilerplate/react-boilerplate.svg" alt="Dependency Status" />
   </a>
   <!-- devDependency Status -->
-  <a href="https://david-dm.org/trixtateam/react-phoenix-boiler-plate#info=devDependencies">
-    <img src="https://david-dm.org/trixtateam/react-phoenix-boiler-plate/dev-status.svg" alt="devDependency Status" />
+  <a href="https://david-dm.org/react-boilerplate/react-boilerplate#info=devDependencies">
+    <img src="https://david-dm.org/react-boilerplate/react-boilerplate/dev-status.svg" alt="devDependency Status" />
   </a>
   <!-- Build Status -->
   <a href="https://travis-ci.org/react-boilerplate/react-boilerplate">
     <img src="https://travis-ci.org/react-boilerplate/react-boilerplate.svg" alt="Build Status" />
   </a>
+  <!-- Test Coverage -->
+  <a href="https://coveralls.io/r/react-boilerplate/react-boilerplate">
+    <img src="https://coveralls.io/repos/github/react-boilerplate/react-boilerplate/badge.svg" alt="Test Coverage" />
+  </a>
+  <a href="https://spectrum.chat/react-boilerplate">
+  <img alt="Chat with us on Spectrum" src="https://withspectrum.github.io/badge/badge.svg" />
+</a>
+
 </div>
 <div align="center">
     <!-- Backers -->
@@ -98,10 +106,10 @@ There’s also a <a href="https://vimeo.com/168648012">fantastic video</a> on ho
 
 ## Quick start
 
-1.  Make sure that you have Node.js v8.10 and npm v5 or above installed.
+1.  Make sure that you have Node.js v8.15.1 and npm v5 or above installed.
 2.  Clone this repo using `git clone --depth=1 https://github.com/trixtateam/react-phoenix-boiler-plate.git <YOUR_PROJECT_NAME>`
 3.  Move to the appropriate directory: `cd <YOUR_PROJECT_NAME>`.<br />
-4.  Run `npm run install` in order to install dependencies and clean the git repo.<br />
+4.  Run `npm run install` in order to install dependencies
     _At this point you can run `npm start` to see the example app at `http://localhost:3000`._
 
 Now you're ready to rumble!
@@ -121,7 +129,7 @@ Now you're ready to rumble!
 
 ## Supporters
 
-This project would not be possible without the support by these amazing folks. [**Become a sponsor**](https://opencollective.com/react-boilerplate) to get your company in front of thousands of engaged react developers and help us out!
+This project would not be possible without the support of these amazing folks. [**Become a sponsor**](https://opencollective.com/react-boilerplate) to get your company in front of thousands of engaged react developers and help us out!
 
 <a href="https://opencollective.com/react-boilerplate/bronze-sponsor/0/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/react-boilerplate/bronze-sponsor/1/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/1/avatar.svg"></a>

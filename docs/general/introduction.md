@@ -1,4 +1,4 @@
-# The Hitchhikers Guide to `react-boilerplate`
+# The Hitchhiker's Guide to `react-boilerplate`
 
 The [`README.md`](https://github.com/trixtateam/react-phoenix-boiler-plate#features) gives you adequate information on how to clone boilerplate files, install dependencies and launch the example app.
 
@@ -19,14 +19,15 @@ Here's a curated list of packages that you should be at least familiar with befo
 - [ ] [Redux](http://redux.js.org/)
 - [ ] [Redux Saga](https://redux-saga.github.io/redux-saga/)
 - [ ] [Reselect](https://github.com/reactjs/reselect)
-- [ ] [ImmutableJS](https://facebook.github.io/immutable-js/)
+- [ ] [Immer](https://github.com/mweststrate/immer)
+- [ ] [Phoenix-to-redux](https://github.com/trixtateam/phoenix-to-redux)
 - [ ] [PhoenixJS](https://hexdocs.pm/phoenix/js/index.html)
 - [ ] [Styled Components](https://github.com/styled-components/styled-components)
 - [ ] [React Semantic UI](https://react.semantic-ui.com/usage)
 ### Unit Testing
 
 - [ ] [Jest](http://facebook.github.io/jest/)
-- [ ] [Enzyme](http://airbnb.io/enzyme/)
+- [ ] [react-testing-library](https://github.com/kentcdodds/react-testing-library)
 
 ### Linting
 
@@ -42,6 +43,10 @@ Note that while `react-boilerplate` includes a lot of features, many of them are
 - [i18n (i.e. `react-intl`)](https://github.com/trixtateam/react-phoenix-boiler-plate/blob/0f88f55ed905f8432c3dd7b452d713df5fb76d8e/docs/js/i18n.md#removing-i18n-and-react-intl)
 
 ## Project Structure
+
+Let's start with understanding why we have chosen our particular structure. It has been an [evolving discussion](https://github.com/react-boilerplate/react-boilerplate/issues/27), and if you have an afternoon or two we recommend you read the full thread.
+
+In any case, here's the TL;DR:
 
 - You will write your app in the `app` folder. This is the folder you will spend most, if not all, of your time in.
 - Configuration, generators and templates are in the `internals` folder.
@@ -70,10 +75,6 @@ The other folders are mostly for the maintainers and/or the setup, and you shoul
 ### `server/`
 
 As the name suggests, this folder contains development and production server configuration.
-
-### `phoenix/`
-
-As the name suggests, this folder contains development related to phoenix socket connections.
 
 
 ### `semantic/`

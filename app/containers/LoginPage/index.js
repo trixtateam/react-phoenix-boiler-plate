@@ -281,7 +281,7 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     dispatchDefaultLoad: () => dispatch(defaultLoad()),
     dispatchRequestAuthentication: (data) =>
-      dispatch(requestAuthentication({ dispatch, data })),
+      dispatch(requestAuthentication({ data })),
   };
 }
 

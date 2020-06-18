@@ -27,9 +27,9 @@
   - [Sass](css/README.md#sass)
   - [LESS](css/README.md#less)
 - [JS](js)
-  - [PhoenixJS](js/phoenix-js.md)
+  - [Phoenix-to-redux](https://github.com/trixtateam/phoenix-to-redux)
   - [Redux](js/redux.md)
-  - [ImmutableJS](js/immutablejs.md)
+  - [Immer](js/immer.md)
   - [reselect](js/reselect.md)
   - [redux-saga](js/redux-saga.md)
   - [i18n](js/i18n.md)
@@ -56,21 +56,21 @@
       on the login button ` <Button fluid size="large" primary>` component to change color"... [Hot Module Reloading](https://webpack.js.org/guides/hot-module-replacement/) gives
       you a feedback loop with your UI so smooth it's almost conversational!
     - Update your [`constants.js`](./app/phoenix/constants.js) file in the phoenix folder
-      to include any changes required to connect your socket. 
+      to include any changes required to connect your socket.
       The following defaults have been given:
       ```
           export const CHANNEL_NAME_PREFIX = 'space:';
-      
+
           export const socketChannels = {
             AUTHENTICATION: 'session',
           };
-          
+
           export const authenticationEvents = {
             LOGIN: 'login',
           };
       ```
     - After updating the [`constants.js`](./app/phoenix/constants.js) file in the phoenix folder, you
-      should now be able to authenticate to your socket. Enter your socket url and credentials to login 
+      should now be able to authenticate to your socket. Enter your socket url and credentials to login
       eg. ws:localhost:4000
 
 ### Development

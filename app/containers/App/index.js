@@ -8,6 +8,7 @@
  */
 
 import React from 'react';
+import { compose } from 'redux';
 import { Switch, Route } from 'react-router-dom';
 
 import HomePage from '../HomePage/Loadable';
@@ -16,8 +17,11 @@ import LoginPage from '../LoginPage/Loadable';
 import AppHeader from '../../components/layout/AppHeader/Loadable';
 import PrivateRoute from '../../components/layout/PrivateRoute';
 import { routePaths } from '../../route-paths';
+import injectSaga from '../../utils/injectSaga';
+import saga from './saga';
+import { DAEMON } from '../../utils/constants';
 
-export default function App() {
+export function App() {
   return (
     <div>
       <AppHeader />
@@ -29,3 +33,7 @@ export default function App() {
     </div>
   );
 }
+
+const withSaga = injectSaga({ key: 'App', saga, mode: DAEMON });
+
+export default compose(withSaga)(App);

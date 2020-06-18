@@ -39,14 +39,19 @@ function isNullOrEmpty(value) {
   return false;
 }
 
-/**
- * returns the immutableType to object or array
- * @param immutableType
+export /**
+ * Based on the contents of the error object will attempt to return a message
+ * @param error
+ * @returns {string|*}
  */
-function transformImmutableToRelativeType(immutableType) {
-  return immutableType && immutableType.toJS
-    ? immutableType.toJS()
-    : immutableType;
+function getMessageFromError(error) {
+  if (error.message) {
+    return error.message;
+  }
+  if (error.reason) {
+    return error.reason;
+  }
+  return JSON.stringify(error);
 }
 
 /**
@@ -101,9 +106,4 @@ function removeErrorsForKey({ errors, errorKey }) {
   return false;
 }
 
-export {
-  isNullOrEmpty,
-  transformImmutableToRelativeType,
-  getErrorsForKey,
-  removeErrorsForKey,
-};
+export { isNullOrEmpty, getErrorsForKey, removeErrorsForKey };

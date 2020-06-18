@@ -207,6 +207,7 @@ import TestPage from 'containers/TestPage/Loadable';
 ```
 react-test-renderer                                     15.5.4
 react-toastify                                          4.1.0
+@trixta/phoenix-to-redux								latest
 phoenix                                                 1.3.4
 semantic-ui-react                                       0.87.3
 semantic-ui-css                                         2.4.1

@@ -4,7 +4,7 @@
  *
  */
 
-import { fromJS } from 'immutable';
+import produce from 'immer';
 import {
   DEFAULT_ACTION,
   DEFAULT_LOAD,
@@ -14,38 +14,41 @@ import {
   REQUEST_LOGIN_TIMEOUT,
 } from './constants';
 
-export const initialState = fromJS({
+export const initialState = {
   response: {
     errors: false,
     success: false,
     warnings: false,
   },
   isLoggingIn: false,
-});
-
-function loginPageReducer(state = initialState, action) {
-  switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
-    case DEFAULT_LOAD:
-      return state
-        .setIn(['response', 'errors'], false)
-        .setIn(['response', 'warnings'], false)
-        .setIn(['response', 'success'], false)
-        .set('isLoggingIn', false);
-    case REQUEST_LOGIN_TIMEOUT:
-      return state
-        .setIn(['response', 'errors'], action.error)
-        .set('isLoggingIn', false);
-    case REQUEST_LOGIN_SUCCESS:
-      return state.set('progressMessage', false).set('isLoggingIn', false);
-    case REQUEST_LOGIN_FAILURE:
-      return state.set('isLoggingIn', false);
-    case REQUEST_LOGIN:
-      return state.set('isLoggingIn', true);
-    default:
-      return state;
-  }
-}
+};
+/* eslint-disable default-case, no-param-reassign, consistent-return */
+const loginPageReducer = (state = initialState, action) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case DEFAULT_ACTION:
+        return state;
+      case DEFAULT_LOAD:
+        draft.response.errors = false;
+        draft.response.warnings = false;
+        draft.response.success = false;
+        draft.isLoggingIn = false;
+        break;
+      case REQUEST_LOGIN_TIMEOUT:
+        draft.response.errors = action.error;
+        draft.isLoggingIn = false;
+        break;
+      case REQUEST_LOGIN_SUCCESS:
+        draft.isLoggingIn = false;
+        draft.progressMessage = false;
+        break;
+      case REQUEST_LOGIN_FAILURE:
+        draft.isLoggingIn = false;
+        break;
+      case REQUEST_LOGIN:
+        draft.isLoggingIn = true;
+        break;
+    }
+  });
 
 export default loginPageReducer;

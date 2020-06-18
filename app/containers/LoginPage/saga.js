@@ -2,28 +2,23 @@ import { put, select, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import _ from 'lodash';
 import {
+  disconnectPhoenix,
+  updatePhoenixLoginDetails,
+  getAnonymousPhoenixChannel,
+  pushToPhoenixChannel,
+  getAuthenticationRedirectUrl,
+} from '@trixta/phoenix-to-redux';
+import {
   REQUEST_LOGIN,
   REQUEST_LOGIN_FAILURE,
   REQUEST_LOGIN_SUCCESS,
   REQUEST_LOGIN_TIMEOUT,
 } from './constants';
 import { loggingIn, updateCurrentUser, updateError } from '../App/actions';
-import { makeSelectRouteLocation, makeSelectSocket } from '../App/selectors';
-import { disconnectSocket, pushToChannel } from '../../phoenix/actions';
 import { routePaths } from '../../route-paths';
 import { defaultLoad, loginFailed } from './actions';
-import {
-  authenticationEvents,
-  SOCKET_DOMAIN,
-  SOCKET_URL,
-  socketChannels,
-} from '../../phoenix/constants';
-import {
-  getAuthenticationRedirectUrl,
-  setLocalStorageItem,
-  formatSocketDomain,
-} from '../../phoenix/utils';
-import { getAnonymousChannel } from '../../phoenix/socketSagas';
+import { socketChannels, authenticationEvents } from '../../phoenix/constants';
+import { makeSelectRouteLocation } from '../App/selectors';
 
 /**
  *
@@ -31,29 +26,29 @@ import { getAnonymousChannel } from '../../phoenix/socketSagas';
  * @param data
  * @returns {IterableIterator<IterableIterator<*>|void|*>}
  */
-export function* loginSaga({ dispatch, data }) {
+export function* loginSaga({ data }) {
   try {
     yield put(loggingIn());
-    const channelName = socketChannels.AUTHENTICATION;
-    const domainDetails = _.get(data, 'domain', '');
-    const domain = formatSocketDomain({ domainString: domainDetails });
-    setLocalStorageItem(SOCKET_DOMAIN, domain);
-    const socketUrl = domain
-      .replace(/(wss?:\/\/|wss?:)/g, '')
-      .replace('/socket', '');
-    setLocalStorageItem(SOCKET_URL, socketUrl);
-    const socket = yield getAnonymousChannel({ dispatch, channelName });
-    yield pushToChannel({
-      dispatch,
-      channelName,
-      eventName: authenticationEvents.LOGIN,
-      customOKResponseEvent: REQUEST_LOGIN_SUCCESS,
-      customErrorResponseEvent: REQUEST_LOGIN_FAILURE,
-      requestData: data,
-      socket,
-      dispatchGlobalError: true,
-      customerTimeoutEvent: REQUEST_LOGIN_TIMEOUT,
-    });
+    const channelTopic = socketChannels.AUTHENTICATION;
+    const domainUrl = _.get(data, 'domain', '');
+    yield put(
+      getAnonymousPhoenixChannel({
+        domainUrl,
+        channelTopic,
+      }),
+    );
+    yield put(
+      pushToPhoenixChannel({
+        channelTopic,
+        eventName: authenticationEvents.LOGIN,
+        channelResponseEvent: REQUEST_LOGIN_SUCCESS,
+        channelErrorResponseEvent: REQUEST_LOGIN_FAILURE,
+        requestData: data,
+        dispatchChannelError: false,
+        channelTimeOutEvent: REQUEST_LOGIN_TIMEOUT,
+        channelPushTimeOut: 5000,
+      }),
+    );
   } catch (error) {
     yield put(loginFailed(error));
     yield put(updateError({ error: error.toString() }));
@@ -85,10 +80,10 @@ export function* handleLoginSuccessSaga({ data }) {
       jwt,
       role_ids,
     };
+    yield put(updatePhoenixLoginDetails({ agentId: agent_id, token: jwt }));
     yield put(updateCurrentUser(loginResponse));
     // Reset/Upgrade socket to latest authorization
-    const socket = yield select(makeSelectSocket());
-    disconnectSocket(socket);
+    yield put(disconnectPhoenix());
     yield put(push(redirectUrl));
   } else {
     yield put(loginFailed());

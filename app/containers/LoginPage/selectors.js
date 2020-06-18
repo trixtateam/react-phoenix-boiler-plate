@@ -1,19 +1,19 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
-import { transformImmutableToRelativeType } from '../../utils/helpers';
 
 /**
  * Direct selector to the loginPage state domain
  */
 
-const selectLoginPageDomain = (state) => state.get('loginPage', initialState);
+const selectLoginPageDomain = (state) => state.loginPage || initialState;
 const selectErrors = (state) =>
-  state.getIn(['loginPage', 'response', 'errors']);
+  state.loginPage.response.errors || initialState.response.errors;
 const selectWarnings = (state) =>
-  state.getIn(['loginPage', 'response', 'warnings']);
+  state.loginPage.response.warnings || initialState.response.warnings;
 const selectSuccess = (state) =>
-  state.getIn(['loginPage', 'response', 'success']);
-const selectIsLoggingIn = (state) => state.getIn(['loginPage', 'isLoggingIn']);
+  state.loginPage.response.success || initialState.response.success;
+const selectIsLoggingIn = (state) =>
+  state.loginPage.isLoggingIn || initialState.isLoggingIn;
 /**
  * Other specific selectors
  */
@@ -23,22 +23,15 @@ const selectIsLoggingIn = (state) => state.getIn(['loginPage', 'isLoggingIn']);
  */
 
 const makeSelectLoginPage = () =>
-  createSelector(selectLoginPageDomain, (substate) => substate.toJS());
+  createSelector(selectLoginPageDomain, (substate) => substate);
 
-const makeSelectErrors = () =>
-  createSelector(selectErrors, (errors) =>
-    transformImmutableToRelativeType(errors),
-  );
+const makeSelectErrors = () => createSelector(selectErrors, (errors) => errors);
 
 const makeSelectWarnings = () =>
-  createSelector(selectWarnings, (warnings) =>
-    transformImmutableToRelativeType(warnings),
-  );
+  createSelector(selectWarnings, (warnings) => warnings);
 
 const makeSelectSuccess = () =>
-  createSelector(selectSuccess, (success) =>
-    transformImmutableToRelativeType(success),
-  );
+  createSelector(selectSuccess, (success) => success);
 
 const makeSelectIsLoggingIn = () =>
   createSelector(selectIsLoggingIn, (loggingIn) => loggingIn);

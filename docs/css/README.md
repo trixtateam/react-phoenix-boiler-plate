@@ -1,14 +1,22 @@
 # Styling (CSS)
 
-## Table of Contents
+
 - [React Semantic UI](#React-Semantic-UI)
 - [Next Generation CSS](#next-generation-css)
-- [CSS Support](#css-we-support)
+  - [Linting](#linting)
+  - [sanitize.css](#sanitizecss)
+- [CSS Support](#css-support)
 - [styled-components](#styled-components)
 - [Stylesheet](#stylesheet)
 - [CSS Modules](#css-modules)
+  - [Setup](#setup)
+  - [Usage](#usage)
 - [Sass](#sass)
+  - [Setup](#setup-1)
+  - [Usage](#usage-1)
 - [LESS](#less)
+  - [Setup](#setup-2)
+  - [Usage](#usage-2)
 
 ## React Semantic UI
 This boilerplate has been updated to make use of 

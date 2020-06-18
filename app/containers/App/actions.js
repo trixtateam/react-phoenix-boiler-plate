@@ -11,8 +11,6 @@ import {
   UPDATE_ERROR,
   UPDATE_LOADING_STATUS,
 } from './constants';
-import { isNullOrEmpty, setLocalStorageItem } from '../../phoenix/utils';
-import { AGENT_ID, PHOENIX_TOKEN } from '../../phoenix/constants';
 
 export function loggingIn(loadingType) {
   return {
@@ -71,11 +69,7 @@ export function updateError({ error }) {
 }
 
 // eslint-disable-next-line camelcase
-export function updateCurrentUser({ agent_id, identity, jwt }) {
-  if (!isNullOrEmpty(agent_id) || !isNullOrEmpty(jwt)) {
-    setLocalStorageItem(PHOENIX_TOKEN, jwt);
-    setLocalStorageItem(AGENT_ID, agent_id);
-  }
+export function updateCurrentUser({ identity }) {
   return {
     type: UPDATE_CURRENT_USER,
     data: {
@@ -84,23 +78,19 @@ export function updateCurrentUser({ agent_id, identity, jwt }) {
   };
 }
 
-export function signOut(dispatch) {
+export function signOut() {
   return {
     type: SIGN_OUT,
-    dispatch,
   };
 }
 
-export function authenticate({ dispatch }) {
+export function authenticate() {
   return {
     type: AUTHENTICATION_REQUEST,
-    dispatch,
   };
 }
 
 export function unAuthenticate() {
-  localStorage.removeItem(PHOENIX_TOKEN);
-  localStorage.removeItem(AGENT_ID);
   return {
     type: AUTHENTICATION_FAILED,
   };

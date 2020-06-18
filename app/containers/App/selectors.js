@@ -1,62 +1,55 @@
 import { createSelector } from 'reselect';
-import { transformImmutableToRelativeType } from '../../utils/helpers';
+import { initialState } from './reducer';
 
-const selectRouter = (state) => state.get('router');
-const selectRouteLocation = (state) => state.getIn(['router', 'location']);
-const selectGlobal = (state) => state.get('global');
-const selectError = (state) => state.getIn(['global', 'error']);
+const selectRouter = (state) => state.router;
+const selectRouteLocation = (state) => state.router.location;
+const selectGlobal = (state) => state.global || initialState;
+const selectError = (state) => state.global.error || initialState.error;
 const selectSuccessMessage = (state) =>
-  state.getIn(['global', 'successMessage']);
+  state.global.successMessage || initialState.successMessage;
 const selectCurrentSession = (state) =>
-  state.getIn(['global', 'currentSession']);
+  state.global.currentSession || initialState.currentSession;
 const selectCurrentUser = (state) =>
-  state.getIn(['global', 'currentSession', 'currentUser']);
-const selectHeaderMenu = (state) => state.getIn(['global', 'headerMenu']);
+  state.global.currentSession.currentUser ||
+  initialState.currentSession.currentUser;
 const selectCurrentUserName = (state) =>
-  state.getIn(['global', 'currentSession', 'currentUser', 'username']);
+  state.global.currentSession.currentUser.username ||
+  initialState.currentSession.currentUser.username;
+const selectHeaderMenu = (state) =>
+  state.global.headerMenu || initialState.headerMenu;
 const selectHasAuthenticated = (state) =>
-  state.getIn(['global', 'currentSession', 'authenticated']);
+  state.global.currentSession.authenticated ||
+  initialState.currentSession.authenticated;
 const selectProgressMessage = (state) =>
-  state.getIn(['global', 'progressMessage']);
-const selectLoadingType = (state) => state.getIn(['global', 'loadingType']);
-const selectLoadingStatus = (state) => state.getIn(['global', 'loadingStatus']);
+  state.global.progressMessage || initialState.progressMessage;
+const selectLoadingType = (state) =>
+  state.global.loadingType || initialState.loadingType;
+const selectLoadingStatus = (state) =>
+  state.global.loadingStatus || initialState.loadingStatus;
 const selectLoadingStatusForKey = (state, props) =>
-  state.getIn(['global', 'loadingStatus', props.loadingStatusKey]);
+  state.global.loadingStatus[props.loadingStatusKey] ||
+  initialState.loadingStatus;
 
 const makeSelectLocation = () =>
-  createSelector(selectRouter, (routerState) =>
-    routerState.get('location').toJS(),
-  );
+  createSelector(selectRouter, (routerState) => routerState.location);
 
 const makeSelectHeaderMenu = () =>
-  createSelector(selectHeaderMenu, (menu) =>
-    transformImmutableToRelativeType(menu),
-  );
+  createSelector(selectHeaderMenu, (menu) => menu);
 
 const makeSelectRouteLocation = () =>
-  createSelector(selectRouteLocation, (routeLocation) =>
-    transformImmutableToRelativeType(routeLocation),
-  );
+  createSelector(selectRouteLocation, (routeLocation) => routeLocation);
 
 const makeSelectGlobalError = () =>
-  createSelector(selectError, (error) =>
-    transformImmutableToRelativeType(error),
-  );
+  createSelector(selectError, (error) => error);
 
 const makeSelectSuccessMessage = () =>
-  createSelector(selectSuccessMessage, (successMessage) =>
-    transformImmutableToRelativeType(successMessage),
-  );
+  createSelector(selectSuccessMessage, (successMessage) => successMessage);
 
 const makeSelectCurrentSession = () =>
-  createSelector(selectCurrentSession, (currentSession) =>
-    transformImmutableToRelativeType(currentSession),
-  );
+  createSelector(selectCurrentSession, (currentSession) => currentSession);
 
 const makeSelectCurrentUser = () =>
-  createSelector(selectCurrentUser, (currentUser) =>
-    transformImmutableToRelativeType(currentUser),
-  );
+  createSelector(selectCurrentUser, (currentUser) => currentUser);
 
 const makeSelectHasAuthenticated = () =>
   createSelector(
@@ -65,24 +58,16 @@ const makeSelectHasAuthenticated = () =>
   );
 
 const makeSelectProgressMessage = () =>
-  createSelector(selectProgressMessage, (message) =>
-    transformImmutableToRelativeType(message),
-  );
+  createSelector(selectProgressMessage, (message) => message);
 
 const makeSelectLoadingType = () =>
-  createSelector(selectLoadingType, (message) =>
-    transformImmutableToRelativeType(message),
-  );
+  createSelector(selectLoadingType, (type) => type);
 
 const makeSelectLoadingStatus = () =>
-  createSelector(selectLoadingStatus, (status) =>
-    transformImmutableToRelativeType(status),
-  );
+  createSelector(selectLoadingStatus, (status) => status);
 
 const makeSelectLoadingStatusForKey = () =>
-  createSelector(selectLoadingStatusForKey, (status) =>
-    transformImmutableToRelativeType(status),
-  );
+  createSelector(selectLoadingStatusForKey, (status) => status);
 
 export {
   selectCurrentSession,

@@ -1,6 +1,10 @@
-import { fromJS } from 'immutable';
+import produce from 'immer';
 import _ from 'lodash';
-import { socketActionTypes } from '../../phoenix/constants';
+import {
+  socketActionTypes,
+  PHOENIX_CHANNEL_END_PROGRESS,
+  PHOENIX_CHANNEL_LOADING_STATUS,
+} from '@trixta/phoenix-to-redux';
 import {
   AUTHENTICATION_FAILED,
   END_PROGRESS,
@@ -15,9 +19,10 @@ import {
 import { LOADING_TYPE } from '../../components/common/Loading/constants';
 import messages from './messages';
 import { routePaths } from '../../route-paths';
+import { getMessageFromError } from '../../utils/helpers';
 
 // The initial state of the App
-export const initialState = fromJS({
+export const initialState = {
   loading: false,
   loadingStatus: {},
   loadingType: false,
@@ -33,83 +38,82 @@ export const initialState = fromJS({
     currentUser: {},
   },
   // this will be sent from the server as users current role permission to certain parts
-});
-
-function appReducer(state = initialState, action) {
-  switch (action.type) {
-    case UPDATE_LOADING_STATUS:
-      return state.set(
-        'loadingStatus',
-        fromJS(
-          state.get('loadingStatus').update((status) =>
-            status.set(_.get(action, 'data.loadingStatusKey', ''), {
-              status: true,
-            }),
-          ),
-        ),
-      );
-    case END_PROGRESS:
-      return state
-        .set('progressMessage', false)
-        .set('loadingType', false)
-        .set(
-          'loadingStatus',
-          fromJS(
-            state
-              .get('loadingStatus')
-              .delete(_.get(action, 'data.loadingStatusKey', '')),
-          ),
+};
+/* eslint-disable default-case, no-param-reassign, consistent-return */
+const appReducer = (state = initialState, action) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case UPDATE_LOADING_STATUS:
+      case PHOENIX_CHANNEL_LOADING_STATUS:
+        draft.loadingStatus[_.get(action, 'data.loadingStatusKey', '')] = {
+          status: true,
+        };
+        break;
+      case PHOENIX_CHANNEL_END_PROGRESS:
+      case END_PROGRESS:
+        {
+          const loadingStatusKey = _.get(
+            action,
+            'data.loadingStatusKey',
+            false,
+          );
+          if (!loadingStatusKey) {
+            draft.progressMessage = false;
+            draft.loadingType = false;
+          } else {
+            delete draft.loadingStatus[loadingStatusKey];
+          }
+        }
+        break;
+      case LOADING:
+        draft.progressMessage = { ...messages.loading };
+        draft.loadingType = _.get(
+          action,
+          'data.loadingType',
+          LOADING_TYPE.logo,
         );
-    case LOADING:
-      return state
-        .set('progressMessage', fromJS({ ...messages.loading }))
-        .set(
-          'loadingType',
-          _.get(action, 'data.loadingType', LOADING_TYPE.logo),
+        break;
+      case LOGGING_IN:
+        draft.progressMessage = { ...messages.loggingIn };
+        draft.loadingType = _.get(
+          action,
+          'data.loadingType',
+          LOADING_TYPE.logo,
         );
-    case LOGGING_IN:
-      return state
-        .set('progressMessage', fromJS({ ...messages.loggingIn }))
-        .set(
-          'loadingType',
-          _.get(action, 'data.loadingType', LOADING_TYPE.logo),
+        break;
+      case UPDATE_ERROR:
+        draft.error = _.isObjectLike(action.error)
+          ? getMessageFromError(action.error)
+          : action.error;
+        draft.progressMessage = false;
+        draft.loadingType = false;
+        break;
+      case RESET_ERROR:
+        draft.error = null;
+        draft.progressMessage = false;
+        draft.loadingType = false;
+        break;
+      case UPDATE_CURRENT_USER:
+        draft.currentSession.currentUser.username = _.get(
+          action,
+          'data.user',
+          '',
         );
-    case UPDATE_ERROR:
-      return state
-        .set(
-          'error',
-          fromJS(
-            _.isObjectLike(action.error)
-              ? JSON.stringify(action.error)
-              : action.error,
-          ),
-        )
-        .set('progressMessage', false)
-        .set('loadingType', false);
-    case RESET_ERROR:
-      return state
-        .set('error', null)
-        .set('progressMessage', false)
-        .set('loadingType', false);
-    case UPDATE_CURRENT_USER:
-      return state.setIn(
-        ['currentSession', 'currentUser', 'username'],
-        fromJS(_.get(action, 'data.user', '')),
-      );
-    case SIGN_OUT:
-      return initialState;
-    case AUTHENTICATION_FAILED:
-      return state
-        .setIn(['currentSession', 'authenticated'], false)
-        .set('progressMessage', false)
-        .set('loadingType', false);
-    case socketActionTypes.SOCKET_ERROR:
-      return state.set('progressMessage', false).set('loadingType', false);
-    case socketActionTypes.SOCKET_CONNECT:
-      return state.set('progressMessage', false).set('loadingType', false);
-    default:
-      return state;
-  }
-}
-
+        break;
+      case SIGN_OUT:
+        return initialState;
+      case AUTHENTICATION_FAILED:
+        draft.currentSession.authenticated = false;
+        draft.progressMessage = false;
+        draft.loadingType = false;
+        break;
+      case socketActionTypes.SOCKET_ERROR:
+      case socketActionTypes.SOCKET_CONNECT:
+        draft.progressMessage = false;
+        draft.loadingType = false;
+        break;
+      default:
+        return state;
+    }
+  });
 export default appReducer;

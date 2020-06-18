@@ -15,6 +15,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { createStructuredSelector } from 'reselect';
 import { Button, Menu } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
+import { isAuthenticated } from '@trixta/phoenix-to-redux';
 import {
   makeSelectCurrentUser,
   makeSelectGlobalError,
@@ -31,17 +32,8 @@ import {
   signOut,
 } from '../../../containers/App/actions';
 import messages from './messages';
-import injectSaga from '../../../utils/injectSaga';
-import saga from './saga';
-import { DAEMON } from '../../../utils/constants';
 import { isNullOrEmpty } from '../../../utils/helpers';
 import Loading from '../../common/Loading';
-import { PHOENIX_TOKEN } from '../../../phoenix/constants';
-import { changeLocale } from '../../../containers/LanguageProvider/actions';
-import {
-  makeSelectLocale,
-  makeSelectLocalesForDropDown,
-} from '../../../containers/LanguageProvider/selectors';
 import MenuLinks from '../../menus/MenuLinks';
 
 class AppHeader extends React.PureComponent {
@@ -143,7 +135,6 @@ class AppHeader extends React.PureComponent {
 
   render() {
     const { headerMenu } = this.props;
-    const isAuthenticated = localStorage.getItem(PHOENIX_TOKEN) !== null;
     return (
       <div>
         {this.renderActivityProgress()}
@@ -152,11 +143,11 @@ class AppHeader extends React.PureComponent {
           <Menu.Menu position="left">
             <MenuLinks
               menuItems={headerMenu}
-              isUserAuthenticated={isAuthenticated}
+              isUserAuthenticated={isAuthenticated()}
             />
           </Menu.Menu>
           <Menu.Menu position="right">
-            {isAuthenticated && (
+            {isAuthenticated() && (
               <Menu.Item>
                 <Button onClick={this.signOut} primary>
                   <FormattedMessage {...messages.logOut} />
@@ -183,9 +174,6 @@ AppHeader.propTypes = {
   dispatchAuthenticate: PropTypes.func,
   location: PropTypes.object,
   dispatchResetError: PropTypes.func,
-  dispatchLocaleChange: PropTypes.func,
-  locale: PropTypes.string,
-  locales: PropTypes.array,
   progressMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   loadingType: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   intl: intlShape.isRequired,
@@ -200,17 +188,14 @@ const mapStateToProps = createStructuredSelector({
   hasAuthenticated: makeSelectHasAuthenticated(),
   progressMessage: makeSelectProgressMessage(),
   loadingType: makeSelectLoadingType(),
-  locale: makeSelectLocale(),
-  locales: makeSelectLocalesForDropDown(),
   headerMenu: makeSelectHeaderMenu(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    dispatchLocaleChange: (evt) => dispatch(changeLocale(evt.target.value)),
-    dispatchAuthenticate: () => dispatch(authenticate({ dispatch })),
-    dispatchSignOut: () => dispatch(signOut(dispatch)),
+    dispatchAuthenticate: () => dispatch(authenticate({})),
+    dispatchSignOut: () => dispatch(signOut()),
     dispatchResetError: () => dispatch(resetError()),
   };
 }
@@ -219,11 +204,8 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-const withSaga = injectSaga({ key: 'AppHeader', saga, mode: DAEMON });
-
 export default compose(
   withRouter,
   withConnect,
-  withSaga,
   injectIntl,
 )(AppHeader);

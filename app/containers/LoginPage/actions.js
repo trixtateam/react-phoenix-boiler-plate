@@ -23,10 +23,9 @@ export function defaultLoad() {
   };
 }
 
-export function requestAuthentication({ dispatch, data }) {
+export function requestAuthentication({ data }) {
   return {
     type: REQUEST_LOGIN,
-    dispatch,
     data,
   };
 }
