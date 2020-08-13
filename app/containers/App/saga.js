@@ -44,14 +44,18 @@ export function* authenticateSaga() {
  * When a socket disconnection happens
  * and redirect to login page
  */
-export function* socketDisconnectionSaga() {
+export function* socketDisconnectionSaga({ socket }) {
   const location = yield select(makeSelectRouteLocation());
-  yield put(unAuthenticate());
   yield put(defaultLoad());
-  if (!isNullOrEmpty(location)) {
-    yield put(push(`${routePaths.LOGIN_PAGE}${_.get(location, 'search', '')}`));
-  } else {
-    yield put(push(routePaths.LOGIN_PAGE));
+  const isAnonymous = socket && socket.params && !socket.params().token;
+  if (!isAnonymous) {
+    if (!isNullOrEmpty(location)) {
+        yield put(
+          push(`${routePaths.LOGIN_PAGE}${_.get(location, 'search', '')}`),
+        );
+      } else {
+        yield put(push(routePaths.LOGIN_PAGE));
+      }
   }
 }
 
@@ -63,7 +67,7 @@ export function* socketDisconnectionSaga() {
  */
 export function* channelJoinErrorSaga({ error, channelTopic }) {
   // eslint-disable-next-line no-console
-  console.info(error, channelTopic);
+  console.error(error, channelTopic);
   yield put(updateError({ error }));
 }
 
