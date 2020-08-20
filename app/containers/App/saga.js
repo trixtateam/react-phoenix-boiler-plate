@@ -86,7 +86,7 @@ export function* socketDisconnectionSaga({ isAnonymous }) {
  */
 export function* channelJoinErrorSaga({ error, channelTopic }) {
   // eslint-disable-next-line no-console
-  console.info(error, channelTopic);
+  console.error(error, channelTopic);
   yield put(updateError({ error }));
 }
 
