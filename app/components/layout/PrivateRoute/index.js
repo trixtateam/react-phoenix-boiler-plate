@@ -7,8 +7,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
-import { isAuthenticated } from '@trixta/phoenix-to-redux';
 import { routePaths } from '../../../route-paths';
+import { isAuthenticated } from '../../../utils/helpers';
 
 /**
  * The private route that will determine if things are allowed to be viewed and redirected to or not

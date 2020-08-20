@@ -15,7 +15,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import { createStructuredSelector } from 'reselect';
 import { Button, Menu } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
-import { isAuthenticated } from '@trixta/phoenix-to-redux';
 import {
   makeSelectCurrentUser,
   makeSelectGlobalError,
@@ -32,7 +31,7 @@ import {
   signOut,
 } from '../../../containers/App/actions';
 import messages from './messages';
-import { isNullOrEmpty } from '../../../utils/helpers';
+import { isNullOrEmpty, isAuthenticated } from '../../../utils/helpers';
 import Loading from '../../common/Loading';
 import MenuLinks from '../../menus/MenuLinks';
 

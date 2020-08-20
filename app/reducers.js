@@ -4,11 +4,10 @@
 
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import { createPhoenixReducer } from '@trixta/phoenix-to-redux';
+import { phoenixReducer } from '@trixta/phoenix-to-redux';
 import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import globalReducer from './containers/App/reducer';
-const phoenixReducer = createPhoenixReducer();
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
  */

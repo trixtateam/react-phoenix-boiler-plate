@@ -5,20 +5,27 @@ import {
   connectPhoenix,
   disconnectPhoenix,
   socketActionTypes,
-  PHOENIX_AGENT_ID,
   channelActionTypes,
-  isAuthenticated,
-  getLocalStorageItem,
 } from '@trixta/phoenix-to-redux';
 import { AUTHENTICATION_REQUEST, SIGN_OUT } from './constants';
 import { unAuthenticate, updateCurrentUser, updateError } from './actions';
 import { makeSelectRouteLocation } from './selectors';
 import { routePaths } from '../../route-paths';
-import { isNullOrEmpty } from '../../utils/helpers';
+import {
+  isNullOrEmpty,
+  isAuthenticated,
+  getLocalStorageItem,
+  removeLocalStorageItem,
+} from '../../utils/helpers';
 import { defaultLoad } from '../LoginPage/actions';
+import {
+  PHOENIX_AGENT_ID,
+  PHOENIX_TOKEN,
+  PHOENIX_SOCKET_DOMAIN,
+} from '../../config';
 
 export function* signOutSaga() {
-  yield put(disconnectPhoenix({ clearPhoenixDetails: true }));
+  yield put(disconnectPhoenix());
 }
 
 /**
@@ -27,13 +34,14 @@ export function* signOutSaga() {
  */
 export function* authenticateSaga() {
   try {
-    yield put(connectPhoenix());
+    const token = getLocalStorageItem(PHOENIX_TOKEN);
+    // eslint-disable-next-line camelcase
+    const agentId = getLocalStorageItem(PHOENIX_AGENT_ID);
+    const domainUrl = getLocalStorageItem(PHOENIX_SOCKET_DOMAIN);
     if (isAuthenticated()) {
+      yield put(connectPhoenix({ token, agentId, domainUrl }));
       // eslint-disable-next-line camelcase
-      const agent_id = getLocalStorageItem(PHOENIX_AGENT_ID);
-
-      // eslint-disable-next-line camelcase
-      yield put(updateCurrentUser({ identity: agent_id }));
+      yield put(updateCurrentUser({ identity: agentId }));
     }
   } catch (e) {
     yield put(unAuthenticate());
@@ -44,14 +52,20 @@ export function* authenticateSaga() {
  * When a socket disconnection happens
  * and redirect to login page
  */
-export function* socketDisconnectionSaga() {
+export function* socketDisconnectionSaga({ isAnonymous }) {
   const location = yield select(makeSelectRouteLocation());
-  yield put(unAuthenticate());
-  yield put(defaultLoad());
-  if (!isNullOrEmpty(location)) {
-    yield put(push(`${routePaths.LOGIN_PAGE}${_.get(location, 'search', '')}`));
-  } else {
-    yield put(push(routePaths.LOGIN_PAGE));
+  if (!isAnonymous) {
+    yield put(defaultLoad());
+    removeLocalStorageItem(PHOENIX_SOCKET_DOMAIN);
+    removeLocalStorageItem(PHOENIX_TOKEN);
+    removeLocalStorageItem(PHOENIX_AGENT_ID);
+    if (!isNullOrEmpty(location)) {
+      yield put(
+        push(`${routePaths.LOGIN_PAGE}${_.get(location, 'search', '')}`),
+      );
+    } else {
+      yield put(push(routePaths.LOGIN_PAGE));
+    }
   }
 }
 

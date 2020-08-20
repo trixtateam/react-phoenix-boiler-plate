@@ -6,6 +6,9 @@ export const DOMAIN =
 export const DOMAIN_PREFIX =
   process.env.NODE_ENV === 'development' ? 'analytics.test' : 'app.analytics';
 export const DOMAIN_NAME = '.trixta.io/socket';
+export const PHOENIX_TOKEN = 'PHOENIX_TOKEN';
+export const PHOENIX_SOCKET_DOMAIN = 'PHOENIX_SOCKET_DOMAIN';
+export const PHOENIX_AGENT_ID = 'PHOENIX_AGENT_ID';
 export const DOMAIN_URL_PARAMETER = 'space';
 export const DEFAULT_DOMAIN_SUFFIX = '.trixta.io';
 export const SOCKET_URI = 'socket';

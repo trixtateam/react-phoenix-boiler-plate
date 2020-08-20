@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { PHOENIX_TOKEN } from '../config';
 
 /**
  * Checks if email address is valid
@@ -39,12 +40,19 @@ function isNullOrEmpty(value) {
   return false;
 }
 
-export /**
+/**
+ * Returns true if there is a PHOENIX_TOKEN present in local storage
+ */
+export function isAuthenticated() {
+  return !isNullOrEmpty(getLocalStorageItem(PHOENIX_TOKEN));
+}
+
+/**
  * Based on the contents of the error object will attempt to return a message
  * @param error
  * @returns {string|*}
  */
-function getMessageFromError(error) {
+export function getMessageFromError(error) {
   if (error.message) {
     return error.message;
   }
@@ -106,4 +114,78 @@ function removeErrorsForKey({ errors, errorKey }) {
   return false;
 }
 
-export { isNullOrEmpty, getErrorsForKey, removeErrorsForKey };
+/**
+ * Returns the url with params intended to navigate to if unable to reach due to not being authenticated
+ * @param routeLocation
+ * @param defaultUrl
+ * @returns {string|*}
+ */
+function getAuthenticationRedirectUrl({ routeLocation, defaultUrl }) {
+  const hasRedirect = routeLocation && routeLocation.state;
+  if (hasRedirect) {
+    const redirectPath = routeLocation.state.from.pathname;
+    const redirectSearchParams = routeLocation.state.from.search;
+    if (redirectPath && redirectSearchParams) {
+      return `${redirectPath}${redirectSearchParams}`;
+    }
+    return redirectPath;
+  }
+
+  return defaultUrl;
+}
+
+/* Remove a local storage value for the given
+* @param key - the key that we wish to remove
+*/
+function removeLocalStorageItem(key) {
+  localStorage.removeItem(key);
+}
+
+/* Sets a local storage value for the given
+* @param key - the key that we wish to set
+* @param{any} value - the value of the key we want to set in local storage
+*/
+function setLocalStorageItem(key, value) {
+  if (_.isObject(value) || _.isArray(value)) {
+    localStorage.setItem(key, JSON.stringify(value));
+  } else {
+    localStorage.setItem(key, value);
+  }
+}
+
+function isJsonString(stringValue) {
+  try {
+    JSON.parse(stringValue);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
+/* Gets a local storage value for the given and returns the defaultValue if not found
+* @param key
+* @param defaultValue
+* @returns {string|*}
+*/
+function getLocalStorageItem(key, defaultValue = null) {
+  const localStorageValue = localStorage.getItem(key);
+  if (isNullOrEmpty(localStorageValue)) {
+    return defaultValue;
+  }
+
+  if (isJsonString(localStorageValue)) {
+    return JSON.parse(localStorageValue);
+  }
+
+  return localStorageValue;
+}
+
+export {
+  isNullOrEmpty,
+  getAuthenticationRedirectUrl,
+  getErrorsForKey,
+  getLocalStorageItem,
+  setLocalStorageItem,
+  removeLocalStorageItem,
+  removeErrorsForKey,
+};

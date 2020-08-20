@@ -2,11 +2,8 @@ import { put, select, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import _ from 'lodash';
 import {
-  disconnectPhoenix,
-  updatePhoenixLoginDetails,
   getAnonymousPhoenixChannel,
   pushToPhoenixChannel,
-  getAuthenticationRedirectUrl,
 } from '@trixta/phoenix-to-redux';
 import {
   REQUEST_LOGIN,
@@ -14,12 +11,25 @@ import {
   REQUEST_LOGIN_SUCCESS,
   REQUEST_LOGIN_TIMEOUT,
 } from './constants';
-import { loggingIn, updateCurrentUser, updateError } from '../App/actions';
+import {
+  loggingIn,
+  updateCurrentUser,
+  updateError,
+  authenticate,
+} from '../App/actions';
 import { routePaths } from '../../route-paths';
 import { defaultLoad, loginFailed } from './actions';
 import { socketChannels, authenticationEvents } from '../../phoenix/constants';
 import { makeSelectRouteLocation } from '../App/selectors';
-
+import {
+  getAuthenticationRedirectUrl,
+  setLocalStorageItem,
+} from '../../utils/helpers';
+import {
+  PHOENIX_SOCKET_DOMAIN,
+  PHOENIX_TOKEN,
+  PHOENIX_AGENT_ID,
+} from '../../config';
 /**
  *
  * @param dispatch
@@ -31,6 +41,7 @@ export function* loginSaga({ data }) {
     yield put(loggingIn());
     const channelTopic = socketChannels.AUTHENTICATION;
     const domainUrl = _.get(data, 'domain', '');
+    setLocalStorageItem(PHOENIX_SOCKET_DOMAIN, domainUrl);
     yield put(
       getAnonymousPhoenixChannel({
         domainUrl,
@@ -80,10 +91,11 @@ export function* handleLoginSuccessSaga({ data }) {
       jwt,
       role_ids,
     };
-    yield put(updatePhoenixLoginDetails({ agentId: agent_id, token: jwt }));
+    setLocalStorageItem(PHOENIX_TOKEN, jwt);
+    setLocalStorageItem(PHOENIX_AGENT_ID, agent_id);
     yield put(updateCurrentUser(loginResponse));
+    yield put(authenticate());
     // Reset/Upgrade socket to latest authorization
-    yield put(disconnectPhoenix());
     yield put(push(redirectUrl));
   } else {
     yield put(loginFailed());

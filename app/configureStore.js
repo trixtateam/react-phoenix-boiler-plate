@@ -7,11 +7,8 @@ import { createPhoenixChannelMiddleware } from '@trixta/phoenix-to-redux';
 import { routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
-import { DOMAIN_URL_PARAMETER } from './config';
 
-const phoenixChannelMiddleWare = createPhoenixChannelMiddleware({
-  domainUrlParameter: DOMAIN_URL_PARAMETER,
-});
+const phoenixChannelMiddleWare = createPhoenixChannelMiddleware();
 
 const sagaMiddleware = createSagaMiddleware();
 
