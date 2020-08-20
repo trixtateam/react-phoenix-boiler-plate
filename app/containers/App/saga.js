@@ -6,6 +6,7 @@ import {
   disconnectPhoenix,
   socketActionTypes,
   channelActionTypes,
+  makeSelectPhoenixSocket,
 } from '@trixta/phoenix-to-redux';
 import { AUTHENTICATION_REQUEST, SIGN_OUT } from './constants';
 import { unAuthenticate, updateCurrentUser, updateError } from './actions';
@@ -25,7 +26,15 @@ import {
 } from '../../config';
 
 export function* signOutSaga() {
-  yield put(disconnectPhoenix());
+  const socket = yield select(makeSelectPhoenixSocket());
+  if (socket) {
+    yield put(disconnectPhoenix());
+  } else {
+    removeLocalStorageItem(PHOENIX_SOCKET_DOMAIN);
+    removeLocalStorageItem(PHOENIX_TOKEN);
+    removeLocalStorageItem(PHOENIX_AGENT_ID);
+    yield put(push(routePaths.LOGIN_PAGE));
+  }
 }
 
 /**
